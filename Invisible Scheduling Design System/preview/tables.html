@@ -1,0 +1,369 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Tables — Invisible Scheduling</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0; padding: 32px;
+    background: #F7F7F8;
+    color: var(--text-active);
+    font-family: var(--font-sans);
+    font-size: 14px; line-height: 1.45;
+  }
+  h2.section {
+    font: 600 11px/1 var(--font-sans);
+    color: var(--primary-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 6px;
+  }
+  p.lede {
+    color: var(--text-inactive-3);
+    font-size: 13px;
+    margin: 0 0 18px;
+    max-width: 72ch;
+  }
+  .block { margin-bottom: 44px; }
+
+  /* ─────────── Dashboard Table (accordion card) ─────────── */
+  .dt-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+  }
+  .dt-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    background: #F4F4F5;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .dt-header.collapsed { border-bottom: none; }
+  .dt-title {
+    font-size: 15px; font-weight: 700;
+    color: var(--text-active);
+    letter-spacing: -0.005em;
+  }
+  .dt-chev {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--primary-600);
+    cursor: pointer;
+  }
+  .dt-chev .material-symbols-outlined { font-size: 20px; }
+
+  .dt-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .dt-table th {
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-active);
+    font-size: 14px;
+    padding: 16px 20px 12px;
+    background: #fff;
+  }
+  .dt-table td {
+    padding: 16px 20px;
+    color: var(--text-active);
+    border-top: 1px solid var(--gray-100);
+    vertical-align: middle;
+  }
+  .dt-table a.link {
+    color: #2962FF;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .dt-foot {
+    padding: 14px 20px;
+    text-align: right;
+    border-top: 1px solid var(--gray-100);
+  }
+  .dt-foot a {
+    color: #2962FF;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .dt-foot a:hover { text-decoration: underline; }
+
+  .dt-stack > * + * { margin-top: 16px; }
+
+  /* ─────────── Patient Scheduling Table (work table) ─────────── */
+  .wt {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .wt table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .wt thead th {
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-active);
+    font-size: 13px;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--gray-200);
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .wt thead th.wrap { white-space: normal; line-height: 1.2; }
+  .wt tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--text-active);
+    vertical-align: middle;
+  }
+  .wt tbody tr:last-child td { border-bottom: none; }
+  .wt .chk { width: 40px; padding-left: 20px; }
+  .wt .pri { width: 56px; }
+  .wt .act { width: 44px; text-align: center; }
+  .wt td.date, .wt td.fw { white-space: nowrap; color: var(--text-active); }
+  .wt td.status { font-weight: 500; }
+  .wt td.svc, .wt td.freq { color: var(--text-active); }
+
+  /* Priority: signal-bars */
+  .bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+  .bars i {
+    display: block; width: 3px; border-radius: 1px;
+    background: var(--gray-300);
+  }
+  .bars i.on { background: var(--text-active); }
+  .bars i:nth-child(1) { height: 4px; }
+  .bars i:nth-child(2) { height: 8px; }
+  .bars i:nth-child(3) { height: 12px; }
+
+  /* Checkbox */
+  .cb {
+    width: 16px; height: 16px; border-radius: 3px;
+    border: 1.5px solid var(--gray-400);
+    background: #fff; display: inline-block; vertical-align: middle;
+    position: relative;
+  }
+  .cb.on {
+    background: var(--primary-500);
+    border-color: var(--primary-500);
+  }
+  .cb.on::after {
+    content: ""; position: absolute;
+    left: 4px; top: 1px; width: 4px; height: 8px;
+    border: solid #fff; border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Send for Time combined header — teal chip with count + small checkbox */
+  .sft {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary-500);
+    color: #fff;
+    padding: 4px 8px 4px 6px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    vertical-align: middle;
+  }
+  .sft .material-symbols-outlined { font-size: 16px; color: #fff; }
+  .sft .count {
+    background: rgba(255,255,255,0.15);
+    padding: 1px 7px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+  }
+  .sft-col { display: inline-flex; align-items: center; gap: 10px; vertical-align: middle; }
+
+  .kebab {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 6px;
+    color: var(--text-inactive-3); cursor: pointer;
+  }
+  .kebab:hover { background: var(--gray-100); color: var(--text-active); }
+
+  /* Notes */
+  .notes {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-inactive-3);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .notes b { color: var(--text-active); font-weight: 600; }
+</style></head>
+<body>
+
+<!-- ─────────────── DASHBOARD TABLE ─────────────── -->
+<div class="block">
+  <h2 class="section">Dashboard table</h2>
+  <p class="lede">
+    Used on the Today / Home views. Each widget is a collapsible card — header
+    bar with the section title and a chevron toggle, plain rows inside, and a
+    right-aligned "View All" link as the footer. Cards stack vertically with a
+    16&nbsp;px gap; multiple can share a column.
+  </p>
+
+  <div class="dt-stack">
+    <!-- Open card -->
+    <div class="dt-card">
+      <div class="dt-header">
+        <div class="dt-title">Needs Scheduling</div>
+        <button class="dt-chev" aria-label="Collapse">
+          <span class="material-symbols-outlined">keyboard_arrow_up</span>
+        </button>
+      </div>
+      <table class="dt-table">
+        <thead>
+          <tr>
+            <th style="width:14%">Patient</th>
+            <th style="width:36%">Address</th>
+            <th style="width:25%">Service</th>
+            <th style="width:25%">Fulfillment Window</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><a class="link">Kevin Smith</a></td><td>123 Oak Street, Springfield, IL 62701</td><td>HS LPN Routine</td><td>Tue Oct 7 – Thu Oct 9</td></tr>
+          <tr><td><a class="link">Maya Reyes</a></td><td>123 Oak Street, Springfield, IL 62701</td><td>HS SW Routine</td><td>Tue Oct 7 – Thu Oct 9</td></tr>
+          <tr><td><a class="link">Chris Brown</a></td><td>123 Oak Street, Springfield, IL 62701</td><td>HS RN Routine</td><td>Tue Oct 7 – Thu Oct 9</td></tr>
+          <tr><td><a class="link">John Green</a></td><td>123 Oak Street, Springfield, IL 62701</td><td>HS Spiritual Care Eval</td><td>Tue Oct 7 – Thu Oct 9</td></tr>
+          <tr><td><a class="link">John Doe</a></td><td>123 Oak Street, Springfield, IL 62701</td><td>HS SW Routine</td><td>Tue Oct 7 – Thu Oct 9</td></tr>
+        </tbody>
+      </table>
+      <div class="dt-foot"><a href="#">View All</a></div>
+    </div>
+
+    <!-- Collapsed card -->
+    <div class="dt-card">
+      <div class="dt-header collapsed">
+        <div class="dt-title">Needs Scheduling</div>
+        <button class="dt-chev" aria-label="Expand">
+          <span class="material-symbols-outlined">keyboard_arrow_down</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div><b>Header</b> — 16&nbsp;×&nbsp;20&nbsp;px, bg <code>#F4F4F5</code>, title 15&nbsp;/&nbsp;700, chevron 32&nbsp;px in a white 1&nbsp;px-border tile.</div>
+    <div><b>Rows</b> — 14&nbsp;px body, 16&nbsp;/&nbsp;20&nbsp;px padding, 1&nbsp;px <code>--gray-100</code> separators. First column links use <code>#2962FF</code>, underlined.</div>
+    <div><b>Footer</b> — right-aligned "View All" link in blue, 14&nbsp;px&nbsp;/&nbsp;600, above a subtle 1&nbsp;px divider.</div>
+  </div>
+</div>
+
+<!-- ─────────────── PATIENT SCHEDULING TABLE ─────────────── -->
+<div class="block">
+  <h2 class="section">Patient scheduling table</h2>
+  <p class="lede">
+    Used on full-page work queues where operators select rows, see status at a
+    glance, and bulk-action. Dense 13&nbsp;px type, leading checkbox, priority
+    signal-bars, inline status chip, and a trailing kebab. The "Send for Time"
+    column pairs a header toggle chip (which counts selected rows) with a
+    per-row checkbox so the operator can queue up a batch before firing.
+  </p>
+
+  <div class="wt">
+    <table>
+      <thead>
+        <tr>
+          <th class="chk"><span class="cb"></span></th>
+          <th class="pri">Priority</th>
+          <th>Status</th>
+          <th>Services</th>
+          <th>Clinician</th>
+          <th>Date</th>
+          <th class="wrap">Fulfillment<br>Window</th>
+          <th>Frequency</th>
+          <th class="wrap" style="min-width:150px">
+            Send for Time<br>
+            <span class="sft-col" style="margin-top:4px">
+              <span class="sft">
+                <span class="material-symbols-outlined">send</span>
+                <span class="count">0</span>
+              </span>
+              <span class="cb on"></span>
+            </span>
+          </th>
+          <th class="act">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i class="on"></i><i></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>Jody Jones</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">1x/wk for 1 wk</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>Maria Rodriguez</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">2x/wk for 2 wks</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i></i><i></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>David Chen</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">2x/wk for 2 wks</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>Maria Rodriguez</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">2x/wk for 2 wks</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i class="on"></i><i></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>David Chen</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">2x/wk for 2 wks</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+        <tr>
+          <td class="chk"><span class="cb"></span></td>
+          <td><span class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></span></td>
+          <td class="status">Ready for<br>Time</td>
+          <td class="svc">HS RN Routine</td>
+          <td>Maria Rodriguez</td>
+          <td class="date">Sat, Oct 18</td>
+          <td class="fw">Tue Oct 14 –<br>Sun Oct 19</td>
+          <td class="freq">2x/wk for 2 wks</td>
+          <td><span class="cb on"></span></td>
+          <td class="act"><span class="kebab material-symbols-outlined">more_vert</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <div><b>Row height</b> 48&nbsp;px (two-line cells stretch to 56&nbsp;px). Horizontal padding 12&nbsp;px; leading checkbox column gets an extra 8&nbsp;px of gutter.</div>
+    <div><b>Priority</b> is a 3-bar signal meter (low&nbsp;/&nbsp;med&nbsp;/&nbsp;high). <b>Status</b> is plain text; the chip variant is reserved for pills on cards.</div>
+    <div><b>Send for Time</b> header combines the action trigger (teal chip with running count) and a per-column "select all" checkbox. Each row has its own checkbox.</div>
+  </div>
+</div>
+
+</body></html>

@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+ body{margin:0;padding:32px;background:#F9FAFB;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+ .tok{display:flex;flex-direction:column;align-items:center;gap:10px}
+ .box{width:140px;height:80px;background:#fff;border-radius:12px}
+ .xs{box-shadow:var(--shadow-xs)}
+ .pr{box-shadow:var(--shadow-product)}
+ .el{box-shadow:var(--shadow-elevated)}
+ .n{font:500 12px/1 var(--font-mono);color:#111827}
+ .v{font:400 11px/1.3 var(--font-mono);color:var(--color-fg-muted);text-align:center}
+</style></head><body>
+<div class="tok"><div class="box xs"></div><div class="n">shadow-xs</div><div class="v">tiny · inputs</div></div>
+<div class="tok"><div class="box pr"></div><div class="n">shadow-product</div><div class="v">cards · nav</div></div>
+<div class="tok"><div class="box el"></div><div class="n">shadow-elevated</div><div class="v">popovers · toolbars</div></div>
+</body></html>

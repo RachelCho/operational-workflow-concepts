@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+ body{margin:0;padding:20px;background:#fff;font-family:var(--font-sans);color:var(--text-active)}
+ .section{font:700 11px/1 var(--font-sans);color:var(--primary-500);text-transform:uppercase;letter-spacing:0.06em;margin:0 0 8px}
+ .row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+ .c{border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;background:#fff}
+ .swatch{height:56px;display:flex;align-items:center;justify-content:center;font:600 13px var(--font-sans);color:#fff}
+ .meta{padding:8px 10px}
+ .name{font:600 12px var(--font-sans);color:var(--text-active)}
+ .hex{font:500 10px var(--font-mono);color:var(--text-inactive-3);margin-top:2px}
+ .desc{font:400 10px var(--font-sans);color:var(--text-inactive-3);margin-top:2px}
+</style></head><body>
+<div class="section">Text Colors</div>
+<div class="row">
+  <div class="c"><div class="swatch" style="background:var(--text-active)">Active</div><div class="meta"><div class="name">Active Text</div><div class="hex">#000000</div><div class="desc">Primary text, headings</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--text-inactive-1)">Inactive 1</div><div class="meta"><div class="name">Inactive Text — L1</div><div class="hex">#2E3744</div><div class="desc">Secondary, descriptions</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--text-inactive-2)">Inactive 2</div><div class="meta"><div class="name">Inactive Text — L2</div><div class="hex">#142B52</div><div class="desc">Tertiary, captions</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--text-inactive-3)">Inactive 3</div><div class="meta"><div class="name">Inactive Text — L3</div><div class="hex">#475467</div><div class="desc">Disabled, placeholders</div></div></div>
+</div>
+
+<div class="section">Outline Colors</div>
+<div class="row">
+  <div class="c"><div class="swatch" style="background:var(--surface);color:var(--text-active);border-bottom:1px solid var(--gray-200)">Surface</div><div class="meta"><div class="name">Surface</div><div class="hex">#FAFAFA</div><div class="desc">Page / card bg</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--divider);color:var(--text-active)">Divider</div><div class="meta"><div class="name">Divider</div><div class="hex">#E1E3E2</div><div class="desc">Dividers, table header</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--border)">Border</div><div class="meta"><div class="name">Borders / Lines</div><div class="hex">#6F7978</div><div class="desc">Borders, separators</div></div></div>
+  <div class="c"><div class="swatch" style="background:#fff;border-bottom:1px solid var(--gray-200);color:var(--text-active)">BG</div><div class="meta"><div class="name">Background</div><div class="hex">#FFFFFF</div><div class="desc">Default canvas</div></div></div>
+</div>
+</body></html>

@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:24px;background:#fff;font-family:var(--font-sans)}
+ .wrap{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;width:280px;box-shadow:var(--shadow-product)}
+ .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+ .head .m{font:700 14px/1 var(--font-sans);color:#181D27}
+ .head .nav{display:flex;gap:4px}
+ .head .nav button{width:24px;height:24px;border:none;background:transparent;color:var(--color-fg-muted);cursor:pointer;border-radius:4px}
+ .head .nav button:hover{background:var(--gray-100)}
+ .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+ .dow{font:500 10px/1 var(--font-sans);color:var(--color-fg-muted);text-align:center;padding:4px 0}
+ .d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-sans);color:#111827;border-radius:999px;cursor:pointer}
+ .d:hover{background:var(--gray-100)}
+ .d.muted{color:var(--gray-400)}
+ .d.sel{background:var(--axle-teal);color:#fff;font-weight:600}
+ .d.today{outline:1px solid var(--axle-teal)}
+</style></head><body>
+<div class="wrap">
+  <div class="head"><div class="m">April 2026</div><div class="nav"><button>‹</button><button>›</button></div></div>
+  <div class="grid">
+    <div class="dow">S</div><div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">T</div><div class="dow">F</div><div class="dow">S</div>
+    <div class="d muted">29</div><div class="d muted">30</div><div class="d muted">31</div>
+    <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
+    <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
+    <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d today">18</div>
+    <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d sel">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
+    <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d muted">1</div><div class="d muted">2</div>
+  </div>
+</div>
+</body></html>

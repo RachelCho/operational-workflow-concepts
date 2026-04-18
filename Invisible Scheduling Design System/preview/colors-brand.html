@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+ body{margin:0;padding:20px;background:#fff;font-family:var(--font-sans);color:var(--text-active)}
+ .section{font:700 11px/1 var(--font-sans);color:var(--primary-500);text-transform:uppercase;letter-spacing:0.06em;margin:0 0 8px}
+ .row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+ .c{border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;background:#fff}
+ .swatch{height:56px;display:flex;align-items:center;justify-content:center;font:600 13px var(--font-sans)}
+ .meta{padding:8px 10px}
+ .name{font:600 12px var(--font-sans);color:var(--text-active)}
+ .hex{font:500 10px var(--font-mono);color:var(--text-inactive-3);margin-top:2px}
+</style></head><body>
+<div class="section">Main Brand Colors</div>
+<div class="row">
+  <div class="c"><div class="swatch" style="background:var(--axle-primary);color:#fff">Primary</div><div class="meta"><div class="name">Primary</div><div class="hex">#007A75</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--axle-secondary);color:#fff">Secondary</div><div class="meta"><div class="name">Secondary</div><div class="hex">#2E5D5B</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--axle-tertiary);color:#fff">Tertiary</div><div class="meta"><div class="name">Tertiary</div><div class="hex">#16665F</div></div></div>
+  <div class="c"><div class="swatch" style="background:#FFFFFF;border-bottom:1px solid var(--gray-200);color:var(--text-active)">On Primary</div><div class="meta"><div class="name">On Primary</div><div class="hex">#FFFFFF</div></div></div>
+</div>
+
+<div class="section">Container Colors</div>
+<div class="row">
+  <div class="c"><div class="swatch" style="background:var(--axle-primary-container);color:#fff">Primary Ctr</div><div class="meta"><div class="name">Primary Container</div><div class="hex">#003331</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--axle-secondary-container);color:var(--text-active)">Secondary Ctr</div><div class="meta"><div class="name">Secondary Container</div><div class="hex">#D7E9E7</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--axle-tertiary-container);color:var(--text-active)">Tertiary Ctr</div><div class="meta"><div class="name">Tertiary Container</div><div class="hex">#B3E4DE</div></div></div>
+  <div class="c"><div class="swatch" style="background:var(--surface);color:var(--text-active);border-bottom:1px solid var(--gray-200)">Surface</div><div class="meta"><div class="name">Surface</div><div class="hex">#FAFAFA</div></div></div>
+</div>
+</body></html>
