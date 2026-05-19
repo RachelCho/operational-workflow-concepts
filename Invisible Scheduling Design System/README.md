@@ -1,15 +1,14 @@
-# operational-scheduling-explorations
+# A design system and operational workflow exploration for Invisible Scheduling — an in-home healthcare scheduling and dispatch platform.
 
-A design system for **Invisible Scheduling** — an in-home healthcare
-scheduling & dispatch platform. The product name refers to the domain:
-scheduling that disappears, handled automatically for field clinicians.
-The design system is called the **Invisible Scheduling Partner Dashboard Components 2025**
-and is the "Single Source of Truth" for the product surface.
+Focused on:
+- AI-assisted scheduling workflows
+- Operational orchestration systems
+- Dispatch coordination
+- Human-in-the-loop healthcare operations
+- Design system architecture
 
-Primary product: the **Partner Dashboard** — a desktop web app where operations
-teams schedule home-visit appointments, assign clinicians, manage branches, and
-monitor service status.
-
+Primary product:
+Partner Dashboard — a desktop platform for scheduling, clinician assignment, branch management, and operational monitoring.
 ---
 
 ## Index
