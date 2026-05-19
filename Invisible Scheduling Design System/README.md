@@ -1,4 +1,4 @@
-# Invisible Scheduling Design System
+# operational-scheduling-explorations
 
 A design system for **Invisible Scheduling** — an in-home healthcare
 scheduling & dispatch platform. The product name refers to the domain:
